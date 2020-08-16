@@ -1,12 +1,12 @@
-import {Game} from './Game.js'
-import {Sprite} from './Sprite.js'
+import {Game} from './engine/Game.js'
+import {Sprite} from './engine/Sprite.js'
 import {sleep} from './utils.js'
 
-const game = new Game('main-container', 400, 400);
+const game = new Game('main-container', 200, 200);
 
-const player = game.addSprite(new Sprite("horse.png",0,0));
-const pikachu = game.addSprite(new Sprite("test.png",300,300));
-const pikachu2 = game.addSprite(new Sprite("test.png",300,-50));
+const player = game.addSprite(new Sprite("media/horse.png",0,0));
+const pikachu = game.addSprite(new Sprite("media/test.png",300,300));
+const pikachu2 = game.addSprite(new Sprite("media/test.png",300,-50));
 game.registerCollisionPair(player, pikachu,
 	(p,obj)=>{collide=true}, (p,obj)=>console.log("halo"));
 game.registerCollisionPair(player, pikachu2,
