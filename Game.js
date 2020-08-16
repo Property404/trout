@@ -9,39 +9,57 @@ const BIG_CANVAS_HEIGHT = 600;
 
 class CollisionPair
 {
-	constructor(sprite1, sprite2, callback)
+	constructor(sprite1, sprite2, callback, halo_callback)
 	{
 		this.sprite1= sprite1;
 		this.sprite2= sprite2;
 		this.callback = callback;
+		this.halo_callback = halo_callback;
 	}
 
 	check(impotent=false)
 	{
-		const x1 = this.sprite1.getAbsoluteX();
-		const x2 = this.sprite2.getAbsoluteX();
+		let x1 = this.sprite1.getAbsoluteX();
+		let x2 = this.sprite2.getAbsoluteX();
 
-		const y1 = this.sprite1.getAbsoluteY();
-		const y2 = this.sprite2.getAbsoluteY();
+		let y1 = this.sprite1.getAbsoluteY();
+		let y2 = this.sprite2.getAbsoluteY();
 
-		const width1 = this.sprite1.width;
-		const width2 = this.sprite2.width;
+		let width1 = this.sprite1.width;
+		let width2 = this.sprite2.width;
 
-		const height1 = this.sprite1.height;
-		const height2 = this.sprite2.height;
+		let height1 = this.sprite1.height;
+		let height2 = this.sprite2.height;
 
+		/* Collision callbacks when sprites 1 and 2 collide */
 		if((x1 >= x2 && x1<=x2+width2)||
 			(x2 >= x1 && x2<=x1+width1))
 		{
 			if((y1 >= y2 && y1<=y2+height2)||
 				(y2 >= y1 && y2<=y1+height1))
 			{
-				if(!impotent)
+				if(this.callback)
 					this.callback(this.sprite1, this.sprite2);
-				return true;
 			}
 		}
-		return false;
+
+
+		/* Halo callbacks are called when sprite1 hits sprite2's halo
+		 * (its 1px border) */
+		x2-=1;
+		width2+=2;
+		y2-=1;
+		height2+=2;
+		if((x1 >= x2 && x1<=x2+width2)||
+			(x2 >= x1 && x2<=x1+width1))
+		{
+			if((y1 >= y2 && y1<=y2+height2)||
+				(y2 >= y1 && y2<=y1+height1))
+			{
+				if(this.halo_callback)
+					this.halo_callback(this.sprite1, this.sprite2);
+			}
+		}
 	}
 }
 
@@ -120,10 +138,14 @@ export class Game extends SpriteContainer
 		return 0;
 	}
 
-	registerCollisionPair(sprite1, sprite2, callback)
+	registerCollisionPair(sprite1, sprite2, callback, halo_callback)
 	{
 		this._collision_pairs.push(
-			new CollisionPair(sprite1, sprite2, callback)
+			new CollisionPair(
+				sprite1,
+				sprite2,
+				callback,
+				halo_callback)
 		);
 	}
 

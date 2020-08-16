@@ -8,7 +8,7 @@ const player = game.addSprite(new Sprite("horse.png",0,0));
 const pikachu = game.addSprite(new Sprite("test.png",300,300));
 const pikachu2 = game.addSprite(new Sprite("test.png",300,-50));
 game.registerCollisionPair(player, pikachu,
-	(p,obj)=>{collide=true});
+	(p,obj)=>{collide=true}, (p,obj)=>console.log("halo"));
 game.registerCollisionPair(player, pikachu2,
 	(p,obj)=>{collide=true});
 
@@ -34,7 +34,7 @@ async function main()
 		game.render();
 		xdiff = 0;
 		ydiff = 0;
-		await sleep(1);
+		await sleep(0);
 
 	}
 }
@@ -43,7 +43,7 @@ main();
 window.onkeydown = function(e)
 {
 	const key = e.key;
-	const speed = 5;
+	const speed = 1;
 	if(key.includes("Arrow"))
 	{
 		e.preventDefault();
