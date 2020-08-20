@@ -1,68 +1,5 @@
 import {SpriteContainer} from './SpriteContainer.js'
 
-/* Actual (big)canvas resolution
- * Should be bigger than the fake(small)
- * canvas resolution, otherwise we get blurriness
- * */
-const BIG_CANVAS_WIDTH = 600;
-const BIG_CANVAS_HEIGHT = 600;
-
-class CollisionPair
-{
-	constructor(sprite1, sprite2, callback, halo_callback)
-	{
-		this.sprite1= sprite1;
-		this.sprite2= sprite2;
-		this.callback = callback;
-		this.halo_callback = halo_callback;
-	}
-
-	check(impotent=false)
-	{
-		let x1 = this.sprite1.getAbsoluteX();
-		let x2 = this.sprite2.getAbsoluteX();
-
-		let y1 = this.sprite1.getAbsoluteY();
-		let y2 = this.sprite2.getAbsoluteY();
-
-		let width1 = this.sprite1.width;
-		let width2 = this.sprite2.width;
-
-		let height1 = this.sprite1.height;
-		let height2 = this.sprite2.height;
-
-		/* Collision callbacks when sprites 1 and 2 collide */
-		if((x1 >= x2 && x1<=x2+width2)||
-			(x2 >= x1 && x2<=x1+width1))
-		{
-			if((y1 >= y2 && y1<=y2+height2)||
-				(y2 >= y1 && y2<=y1+height1))
-			{
-				if(this.callback)
-					this.callback(this.sprite1, this.sprite2);
-			}
-		}
-
-
-		/* Halo callbacks are called when sprite1 hits sprite2's halo
-		 * (its 1px border) */
-		x2-=1;
-		width2+=2;
-		y2-=1;
-		height2+=2;
-		if((x1 >= x2 && x1<=x2+width2)||
-			(x2 >= x1 && x2<=x1+width1))
-		{
-			if((y1 >= y2 && y1<=y2+height2)||
-				(y2 >= y1 && y2<=y1+height1))
-			{
-				if(this.halo_callback)
-					this.halo_callback(this.sprite1, this.sprite2);
-			}
-		}
-	}
-}
-
 /*
  * Class meant to have a single instance 
  * Root for all sprites
@@ -72,7 +9,7 @@ class CollisionPair
 export class Game extends SpriteContainer
 {
 	_collision_pairs = [];
-	constructor(div_id, width, height){
+	constructor(div_id, width, height, detail=2){
 		super();
 		this._html_root = document.getElementById(div_id);
 
@@ -82,8 +19,8 @@ export class Game extends SpriteContainer
 		this._small_canvas.hidden = true;
 
 		this._big_canvas = document.createElement("canvas");
-		this._big_canvas.width = BIG_CANVAS_WIDTH;
-		this._big_canvas.height = BIG_CANVAS_HEIGHT;
+		this._big_canvas.width = width*detail;
+		this._big_canvas.height = height*detail;
 
 		this._html_root.appendChild(this._small_canvas);
 		this._html_root.appendChild(this._big_canvas);
@@ -138,15 +75,9 @@ export class Game extends SpriteContainer
 		return 0;
 	}
 
-	registerCollisionPair(sprite1, sprite2, callback, halo_callback)
+	registerCollisionPair(cp)
 	{
-		this._collision_pairs.push(
-			new CollisionPair(
-				sprite1,
-				sprite2,
-				callback,
-				halo_callback)
-		);
+		this._collision_pairs.push(cp);
 	}
 
 	checkCollisionPairs()

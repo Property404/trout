@@ -27,4 +27,9 @@ export class SpriteContainer
 	{
 		throw new Error("Unimplemented virtual function");
 	}
+
+	getSubsprites()
+	{
+		return this._sprites;
+	}
 }

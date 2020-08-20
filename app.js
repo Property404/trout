@@ -1,16 +1,19 @@
 import {Game} from './engine/Game.js'
+import {CollisionPair} from './engine/CollisionPair.js'
 import {Sprite} from './engine/Sprite.js'
 import {sleep} from './utils.js'
 
-const game = new Game('main-container', 200, 200);
+const game = new Game('main-container', 200, 200, 3);
 
-const player = game.addSprite(new Sprite("media/horse.png",0,0));
-const pikachu = game.addSprite(new Sprite("media/test.png",300,300));
-const pikachu2 = game.addSprite(new Sprite("media/test.png",300,-50));
-game.registerCollisionPair(player, pikachu,
-	(p,obj)=>{collide=true}, (p,obj)=>console.log("halo"));
-game.registerCollisionPair(player, pikachu2,
-	(p,obj)=>{collide=true});
+const player = game.addSprite(new Sprite("media/megaman.gif",0,0));
+
+for (const point of [[100,200],[200,50],[25,60],[50,133]])
+{
+	const tree = new Sprite("media/tree.gif", point[0], point[1]);
+	const cp = new CollisionPair(player, tree, ()=>{collide=true;});
+	game.addSprite(tree);
+	game.registerCollisionPair(cp);
+}
 
 let xdiff = 0;
 let ydiff = 0;
@@ -34,7 +37,7 @@ async function main()
 		game.render();
 		xdiff = 0;
 		ydiff = 0;
-		await sleep(0);
+		await sleep(10);
 
 	}
 }
@@ -68,4 +71,3 @@ window.onkeydown = function(e)
 		enter_pressed = true;
 	}
 }
-main();
