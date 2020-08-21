@@ -9,6 +9,8 @@ import {SpriteContainer} from './SpriteContainer.js'
 export class Game extends SpriteContainer
 {
 	_collision_pairs = [];
+	x=0;
+	y=0;
 	constructor(div_id, width, height, detail=2){
 		super();
 		this._html_root = document.getElementById(div_id);
@@ -67,12 +69,12 @@ export class Game extends SpriteContainer
 
 	getAbsoluteX()
 	{
-		return 0;
+		return this.x;
 	}
 
 	getAbsoluteY()
 	{
-		return 0;
+		return this.y;
 	}
 
 	registerCollisionPair(cp)

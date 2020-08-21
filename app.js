@@ -24,8 +24,10 @@ async function main()
 	await sleep(50);
 	while(true)
 	{
-		player.x += xdiff;
-		player.y += ydiff;
+		game.x += xdiff;
+		game.y += ydiff;
+		player.x -= xdiff;
+		player.y -= ydiff;
 		game.checkCollisionPairs();
 		if(collide)
 		{
