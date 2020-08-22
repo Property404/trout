@@ -1,5 +1,5 @@
 "use strict";
-const FRICTION = 900;
+const FRICTION = 1500;
 class TroutScene extends Phaser.Scene
 {
 	player=null;
@@ -68,6 +68,29 @@ class TroutScene extends Phaser.Scene
 		}
 		this.physics.add.collider(this.player, fixture_group);
 
+		const correct = (obj, touch)=>
+		{
+			if(touch)
+			{
+				obj.y--;
+				obj.body.y--;
+			}
+			else if(touch)
+			{
+				obj.y++;
+				obj.body.y++;
+			}
+			else if(touch)
+			{
+				obj.x--;
+				obj.body.x--;
+			}
+			else if (touch)
+			{
+				obj.x++;
+				obj.body.x++;
+			}
+		}
 		// Disallow moving of movables when it hits a static group
 		const stopIt = (a,b)=>{
 			for(const obj of [a,b])
@@ -76,28 +99,14 @@ class TroutScene extends Phaser.Scene
 				{
 					obj.body.immovable = true;
 					this._stuck_movables.add(obj);
-					if(obj === b)
+					if(obj === b && !obj.body.touching.none)
 					{
-						if(obj.body.touching.down)
-						{
-							obj.y--;
-							obj.body.y--;
-						}
-						if(obj.body.touching.up)
-						{
-							obj.y++;
-							obj.body.y++;
-						}
-						if(obj.body.touching.right)
-						{
-							obj.x--;
-							obj.body.x--;
-						}
-						if(obj.body.touching.left)
-						{
-							obj.x++;
-							obj.body.x++;
-						}
+						correct(obj, obj.body.touching);
+					}
+					if(obj === b && obj.body.touching.none)
+					{
+						correct(obj, obj.body.wasTouching);
+						console.log("oh");
 					}
 				}
 			}
