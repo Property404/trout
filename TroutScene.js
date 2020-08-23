@@ -110,11 +110,13 @@ class TroutScene extends Phaser.Scene
 
 		if(this.cursors.left.isDown)
 		{
+			this.player.flipX = true;
 			this.player.setVelocityX(-SPEED);
 			this.player.setVelocityY(0);
 		}
 		else if(this.cursors.right.isDown)
 		{
+			this.player.flipX = false;
 			this.player.setVelocityX(SPEED);
 			this.player.setVelocityY(0);
 		}
@@ -134,13 +136,10 @@ class TroutScene extends Phaser.Scene
 					{
 						obj.body.immovable=true;
 						this._stuck_movables.delete(obj);
-						console.log("Freezing");
 					}
 				}
 			}
 		}
-
-
 
 
 		if(this.updateScene)this.updateScene();
