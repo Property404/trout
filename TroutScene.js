@@ -1,5 +1,5 @@
 "use strict";
-const FRICTION = 1500;
+const FRICTION = 1000;
 class TroutScene extends Phaser.Scene
 {
 	player=null;
@@ -52,6 +52,7 @@ class TroutScene extends Phaser.Scene
 			if(fixture_data.movable)
 			{
 				sprite.body.setDrag(FRICTION);
+				sprite.body.immovable = true;
 			}
 
 			if(fixture_data.scale)
@@ -67,55 +68,20 @@ class TroutScene extends Phaser.Scene
 			}
 		}
 		this.physics.add.collider(this.player, fixture_group);
-
-		const correct = (obj, touch)=>
-		{
-			if(touch)
-			{
-				obj.y--;
-				obj.body.y--;
-			}
-			else if(touch)
-			{
-				obj.y++;
-				obj.body.y++;
-			}
-			else if(touch)
-			{
-				obj.x--;
-				obj.body.x--;
-			}
-			else if (touch)
-			{
-				obj.x++;
-				obj.body.x++;
-			}
-		}
-		// Disallow moving of movables when it hits a static group
-		const stopIt = (a,b)=>{
+		this.physics.add.collider(movables_group, undefined,
+		(a,b)=>{
 			for(const obj of [a,b])
 			{
-				if(obj.body.physicsType != Phaser.Physics.Arcade.STATIC_BODY)
-				{
-					obj.body.immovable = true;
-					this._stuck_movables.add(obj);
-					if(obj === b && !obj.body.touching.none)
-					{
-						correct(obj, obj.body.touching);
-					}
-					if(obj === b && obj.body.touching.none)
-					{
-						correct(obj, obj.body.wasTouching);
-						console.log("oh");
-					}
-				}
+			obj.body.velocity.x=0;
+			obj.body.velocity.y=0;
+			obj.body.immovable=true;
 			}
-		}
-
-		this.physics.add.collider(movables_group, movables_group, stopIt)
-		this.physics.add.collider(fixture_group, movables_group, stopIt);
+		})
+		this.physics.add.collider(fixture_group, movables_group);
 		this.physics.add.collider(this.player, movables_group,
 			(player,obj)=>{
+				obj.body.immovable = false;
+				this._stuck_movables.add(obj);
 			}
 		);
 
@@ -160,18 +126,20 @@ class TroutScene extends Phaser.Scene
 			else if(this.cursors.down.isDown)
 				this.player.setVelocityY(160);
 			else
-				this.player.setVelocityY(0);
-		}
-
-
-		for(const obj of this._stuck_movables)
-		{
-			if(obj.body.touching.none)
 			{
-				obj.body.immovable=false;
-				this._stuck_movables.delete(obj);
+				this.player.setVelocityY(0);
+				for(const obj of this._stuck_movables)
+				{
+					if(obj.body.velocity.x == 0 && obj.body.velocity.y==0)
+					{
+						obj.body.immovable=true;
+						this._stuck_movables.delete(obj);
+						console.log("Freezing");
+					}
+				}
 			}
 		}
+
 
 
 
