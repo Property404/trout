@@ -11,31 +11,28 @@ class FirstScene extends TroutScene
 			},
 			{
 				x:200, y:100,
-				angle:20,
 				scale:2,
 				src:"platform.png",
 			},
 			{
-				x:20, y:+30,
+				label:"big_star",
+				x:-50, y:+20,
 				movable:true,
-				//angle:20,
-				//scale:2,
+				scale:2,
 				src:"star.png",
 			},
 			{
 				x:20, y:-30,
 				movable:true,
-				//angle:20,
-				//scale:4,
 				src:"star.png",
 			},
 			{
 				x:200, y:-30,
 				movable:true,
-				//angle:20,
-				//scale:4,
 				src:"star.png",
 			},
 		];
+
+		this.addInteraction("big_star", ()=>alert("Woo hey wow hey!"));
 	}
 }

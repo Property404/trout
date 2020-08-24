@@ -7,6 +7,8 @@ class TroutScene extends Phaser.Scene
 	fixtures = [];
 	_sources = new Set();
 	_stuck_movables = new Set();
+	_interactions = [];
+	_sprite_dict = {};
 
 
 	_preloadFixtures()
@@ -49,6 +51,11 @@ class TroutScene extends Phaser.Scene
 					fixture_data.src);
 			}
 
+			if(fixture_data.label)
+			{
+				this._sprite_dict[fixture_data.label] = sprite;
+			}
+
 			if(fixture_data.movable)
 			{
 				sprite.body.setDrag(FRICTION);
@@ -87,6 +94,13 @@ class TroutScene extends Phaser.Scene
 
 	}
 
+	addInteraction(label, action)
+	{
+		this._interactions.push({
+			label:label,
+			action:action});
+	}
+
 	preload()
 	{
 		this.load.setBaseURL('media');
@@ -102,6 +116,31 @@ class TroutScene extends Phaser.Scene
 		this.cameras.main.startFollow(this.player);
 		this._createFixtures();
 		if(this.createScene)this.createScene()
+
+		// Set off interactions
+		this.input.keyboard.on('keyup', e=>{
+			if(e.keyCode === 13 || e.keyCode === 32)
+			{
+				for(const interaction of this._interactions)
+				{
+					const sprite = this._sprite_dict[interaction.label];
+					const gap = 25;
+					const xgap = gap + sprite.width/2 + this.player.width/2;
+					const ygap = gap + sprite.height/2 + this.player.height/2;
+					if (
+						this.player.x > sprite.x - xgap &&
+						this.player.x < sprite.x + xgap &&
+						this.player.y > sprite.y - ygap &&
+						this.player.y < sprite.y + ygap
+					)
+					{
+						interaction.action();
+						break;
+					}
+				}
+			}
+		});
+
 	}
 
 	update()
