@@ -15,13 +15,6 @@ class FirstScene extends TroutScene
 				src:"platform.png",
 			},
 			{
-				label:"big_star",
-				x:-50, y:+20,
-				movable:true,
-				scale:2,
-				src:"star.png",
-			},
-			{
 				x:20, y:-30,
 				movable:true,
 				src:"star.png",
@@ -31,8 +24,19 @@ class FirstScene extends TroutScene
 				movable:true,
 				src:"star.png",
 			},
+			{
+				label:"big_star",
+				x:-50, y:+20,
+				movable:true,
+				scale:2,
+				src:"star.png",
+			},
 		];
 
-		this.addInteraction("big_star", ()=>alert("Woo hey wow hey!"));
+		this.addInteraction("big_star", ()=>{
+			trout.setPrimaryScene("BulbasaurWorld");
+		});
 	}
 }
+
+trout.addScene(FirstScene);
