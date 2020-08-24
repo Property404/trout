@@ -2,9 +2,9 @@
 const FRICTION = 1000;
 class TroutScene extends Phaser.Scene
 {
-	player=null;
-	cursors=null;
 	fixtures = [];
+	_player=null;
+	_cursors=null;
 	_sources = new Set();
 	_stuck_movables = new Set();
 	_interactions = [];
@@ -74,7 +74,7 @@ class TroutScene extends Phaser.Scene
 				sprite.refreshBody();
 			}
 		}
-		this.physics.add.collider(this.player, fixture_group);
+		this.physics.add.collider(this._player, fixture_group);
 		this.physics.add.collider(movables_group, undefined,
 		(a,b)=>{
 			for(const obj of [a,b])
@@ -85,7 +85,7 @@ class TroutScene extends Phaser.Scene
 			}
 		})
 		this.physics.add.collider(fixture_group, movables_group);
-		this.physics.add.collider(this.player, movables_group,
+		this.physics.add.collider(this._player, movables_group,
 			(player,obj)=>{
 				obj.body.immovable = false;
 				this._stuck_movables.add(obj);
@@ -105,15 +105,15 @@ class TroutScene extends Phaser.Scene
 	{
 		this.load.setBaseURL('media');
 		this.load.image('player', 'megaman.gif');
-		this.cursors = this.input.keyboard.createCursorKeys();
+		this._cursors = this.input.keyboard.createCursorKeys();
 		this._preloadFixtures();
 		if(this.preloadScene)this.preloadScene()
 	}
 
 	create()
 	{
-		this.player = this.physics.add.sprite(0, 0, 'player');
-		this.cameras.main.startFollow(this.player);
+		this._player = this.physics.add.sprite(0, 0, 'player');
+		this.cameras.main.startFollow(this._player);
 		this._createFixtures();
 		if(this.createScene)this.createScene()
 
@@ -125,13 +125,13 @@ class TroutScene extends Phaser.Scene
 				{
 					const sprite = this._sprite_dict[interaction.label];
 					const gap = 25;
-					const xgap = gap + sprite.width/2 + this.player.width/2;
-					const ygap = gap + sprite.height/2 + this.player.height/2;
+					const xgap = gap + sprite.width/2 + this._player.width/2;
+					const ygap = gap + sprite.height/2 + this._player.height/2;
 					if (
-						this.player.x > sprite.x - xgap &&
-						this.player.x < sprite.x + xgap &&
-						this.player.y > sprite.y - ygap &&
-						this.player.y < sprite.y + ygap
+						this._player.x > sprite.x - xgap &&
+						this._player.x < sprite.x + xgap &&
+						this._player.y > sprite.y - ygap &&
+						this._player.y < sprite.y + ygap
 					)
 					{
 						interaction.action();
@@ -147,28 +147,28 @@ class TroutScene extends Phaser.Scene
 	{
 		const SPEED = 200;
 
-		if(this.cursors.left.isDown)
+		if(this._cursors.left.isDown)
 		{
-			this.player.flipX = true;
-			this.player.setVelocityX(-SPEED);
-			this.player.setVelocityY(0);
+			this._player.flipX = true;
+			this._player.setVelocityX(-SPEED);
+			this._player.setVelocityY(0);
 		}
-		else if(this.cursors.right.isDown)
+		else if(this._cursors.right.isDown)
 		{
-			this.player.flipX = false;
-			this.player.setVelocityX(SPEED);
-			this.player.setVelocityY(0);
+			this._player.flipX = false;
+			this._player.setVelocityX(SPEED);
+			this._player.setVelocityY(0);
 		}
 		else
 		{
-			this.player.setVelocityX(0);
-			if(this.cursors.up.isDown)
-				this.player.setVelocityY(-160);
-			else if(this.cursors.down.isDown)
-				this.player.setVelocityY(160);
+			this._player.setVelocityX(0);
+			if(this._cursors.up.isDown)
+				this._player.setVelocityY(-160);
+			else if(this._cursors.down.isDown)
+				this._player.setVelocityY(160);
 			else
 			{
-				this.player.setVelocityY(0);
+				this._player.setVelocityY(0);
 				for(const obj of this._stuck_movables)
 				{
 					if(obj.body.velocity.x == 0 && obj.body.velocity.y==0)
