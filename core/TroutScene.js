@@ -10,6 +10,11 @@ class TroutScene extends Phaser.Scene
 	_interactions = [];
 	_sprite_dict = {};
 
+	constructor()
+	{
+		super();
+		if(this.setup)this.setup();
+	}
 
 	_preloadFixtures()
 	{
@@ -107,7 +112,6 @@ class TroutScene extends Phaser.Scene
 		this.load.image('player', 'megaman.gif');
 		this._cursors = this.input.keyboard.createCursorKeys();
 		this._preloadFixtures();
-		if(this.preloadScene)this.preloadScene()
 	}
 
 	create()
@@ -115,7 +119,6 @@ class TroutScene extends Phaser.Scene
 		this._player = this.physics.add.sprite(0, 0, 'player');
 		this.cameras.main.startFollow(this._player);
 		this._createFixtures();
-		if(this.createScene)this.createScene()
 
 		// Set off interactions
 		this.input.keyboard.on('keyup', e=>{
@@ -179,9 +182,6 @@ class TroutScene extends Phaser.Scene
 				}
 			}
 		}
-
-
-		if(this.updateScene)this.updateScene();
 	}
 
 }
