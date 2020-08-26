@@ -10,7 +10,7 @@ body,html{
 	color:white;
 	display:flex;
 	font-variant:small-caps;
-	font-family: roboto, lato;
+	font-family: serif;
 }
 
 #initial-loading-screen
