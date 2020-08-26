@@ -1,0 +1,27 @@
+[
+	{
+		"src":"platform.png",
+		"x":0, "y":-200
+	},
+	{
+		"src":"platform.png",
+		"x":200, "y":100,
+		"scale":2
+	},
+	{
+		"src":"star.png",
+		"x":20, "y":-30,
+		"movable":true
+	},
+	{
+		"src":"star.png",
+		"x":200, "y":-30,
+		"movable":true
+	},
+	{
+		"label":"big_star",
+		"src":"star.png",
+		"x":-50, "y":20,
+		"scale":2
+	}
+]

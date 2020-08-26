@@ -1,0 +1,9 @@
+[
+	{
+		"label":"big_bulbasaur",
+		"x":-200, "y":90,
+		"scale":3,
+		"src":"bulbasaur.png",
+		"passable":true
+	}
+]

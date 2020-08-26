@@ -1,0 +1,17 @@
+*
+!.gitignore
+
+!*.png
+!*.gif
+!*.svg
+!*.js
+!*.html
+!*.css
+!*.txt
+!*.json
+
+!story
+!media
+!core
+!scenes
+!scenes/**/

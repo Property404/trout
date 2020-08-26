@@ -13,6 +13,12 @@ class TroutScene extends Phaser.Scene
 	constructor()
 	{
 		super();
+		
+		// preSetup is used internally to deal with added resources
+		// like fixtures and other nonsense
+		if(this.preSetup())this.preSetup();
+
+		// Setup is used by the top-level programmer
 		if(this.setup)this.setup();
 	}
 

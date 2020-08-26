@@ -4,4 +4,4 @@ trout.onFinishLoading(()=>
 );
 
 // Load first scene
-trout.setPrimaryScene("FirstScene");
+trout.setPrimaryScene("ExampleScene");
