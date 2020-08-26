@@ -73,7 +73,7 @@ class TroutManager
 	
 	finishLoading(callback)
 	{
-		if(this._loading_finished_callback);
+		if(this._loading_finished_callback)
 		{
 			this._loading_finished_callback();
 			this._loading_finished_callback = null;
