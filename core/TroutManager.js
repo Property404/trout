@@ -65,6 +65,20 @@ class TroutManager
 		};
 		
 	}
+
+	onFinishLoading(callback)
+	{
+		this._loading_finished_callback = callback;
+	}
+	
+	finishLoading(callback)
+	{
+		if(this._loading_finished_callback);
+		{
+			this._loading_finished_callback();
+			this._loading_finished_callback = null;
+		}
+	}
 };
 
 const trout = new TroutManager;

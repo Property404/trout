@@ -1,4 +1,7 @@
-trout.setPrimaryScene("FirstScene");
-
 // Remove loading screen
-document.getElementById("initial-loading-screen").remove();
+trout.onFinishLoading(()=>
+	document.getElementById("initial-loading-screen").remove()
+);
+
+// Load first scene
+trout.setPrimaryScene("FirstScene");

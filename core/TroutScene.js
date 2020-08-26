@@ -144,6 +144,9 @@ class TroutScene extends Phaser.Scene
 			}
 		});
 
+		// If this is the first scene,
+		// trout has finished loading
+		trout.finishLoading();
 	}
 
 	update()
