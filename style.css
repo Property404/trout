@@ -7,7 +7,26 @@ body,html{
 	padding:0;
 	margin:0;
 	background-color:black;
+	color:white;
 	display:flex;
+	font-variant:small-caps;
+	font-family: roboto, lato;
+}
+
+#initial-loading-screen
+{
+	position:fixed;
+	height:100%;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	background-color:black;
+	z-index:100;
+	flex-direction:column;
+	font-size:2rem;
+	animation:fade 4.5s linear infinite;
+
 }
 
 canvas{
@@ -23,4 +42,9 @@ canvas{
 	  height:auto !important;
 	  max-width:800px;
   }
+}
+@keyframes fade{
+  0% {}
+  50% {color:#111}
+  100% {}
 }
