@@ -24,9 +24,13 @@ body,html{
 	background-color:black;
 	z-index:100;
 	flex-direction:column;
-	font-size:2rem;
+	font-size:1rem;
+	text-align:center;
 	animation:fade 4.0s linear infinite;
-
+}
+#loading-text
+{
+	font-size:2rem;
 }
 
 canvas{
