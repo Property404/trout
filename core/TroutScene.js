@@ -1,14 +1,28 @@
 "use strict";
 const FRICTION = 1000;
+
+// Represents a REGULAR Trout scene/world/realm
+// where you can remove around and shit
+// This does not include UI/game over/etc scenes
 class TroutScene extends Phaser.Scene
 {
+	// Fixtures are any objects that belong to the scene
+	// This is a Trout abstraction
 	fixtures = [];
+
 	_player=null;
-	_cursors=null;
-	_sources = new Set();
-	_stuck_movables = new Set();
-	_interactions = [];
+	// List of sprites by label
 	_sprite_dict = {};
+	// Input cursor
+	_cursors=null;
+	// Keep track of what assets we load
+	_sources = new Set();
+	// Used to get around physics engine limitation
+	_stuck_movables = new Set();
+	// Bound callbacks to particular fixtures w/label
+	// To be executed when user presses space or enter
+	// or something like that near the fixture
+	_interactions = [];
 
 	constructor()
 	{
@@ -86,6 +100,7 @@ class TroutScene extends Phaser.Scene
 			}
 		}
 		this.physics.add.collider(this._player, fixture_group);
+		// Stop both movables when one hits another 
 		this.physics.add.collider(movables_group, undefined,
 		(a,b)=>{
 			for(const obj of [a,b])
@@ -96,6 +111,7 @@ class TroutScene extends Phaser.Scene
 			}
 		})
 		this.physics.add.collider(fixture_group, movables_group);
+		// Allow movables to be moved only on collision
 		this.physics.add.collider(this._player, movables_group,
 			(player,obj)=>{
 				obj.body.immovable = false;
@@ -105,6 +121,10 @@ class TroutScene extends Phaser.Scene
 
 	}
 
+
+	// Bind callbacks to particular fixtures w/label
+	// To be executed when user presses space or enter
+	// or something like that near the fixture
 	addInteraction(label, action)
 	{
 		this._interactions.push({
@@ -181,6 +201,8 @@ class TroutScene extends Phaser.Scene
 			else
 			{
 				this._player.setVelocityY(0);
+
+				// Only allow objects currently being moved to be movable
 				for(const obj of this._stuck_movables)
 				{
 					if(obj.body.velocity.x == 0 && obj.body.velocity.y==0)
