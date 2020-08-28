@@ -16,7 +16,7 @@ class BulbasaurWorld extends TroutScene
 			// Upper wall
 			this.fixtures.push(
 				{
-					src:"bulbasaur.png",
+					src:"old/bulbasaur.png",
 					x:xstart+i*step,
 					y:ystart
 				});
@@ -24,7 +24,7 @@ class BulbasaurWorld extends TroutScene
 			// Left wall
 			this.fixtures.push(
 				{
-					src:"bulbasaur.png",
+					src:"old/bulbasaur.png",
 					x:xstart,
 					y:ystart+i*step
 				});
@@ -32,7 +32,7 @@ class BulbasaurWorld extends TroutScene
 			// Right wall
 			this.fixtures.push(
 				{
-					src:"bulbasaur.png",
+					src:"old/bulbasaur.png",
 					x:xstart+length*step,
 					y:ystart+i*step
 				});
@@ -40,7 +40,7 @@ class BulbasaurWorld extends TroutScene
 			// Lower wall
 			this.fixtures.push(
 				{
-					src:"bulbasaur.png",
+					src:"old/bulbasaur.png",
 					x:xstart+i*step,
 					y:ystart+(length-1)*step
 				});

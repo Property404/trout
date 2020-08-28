@@ -134,8 +134,8 @@ class TroutScene extends Phaser.Scene
 
 	preload()
 	{
-		this.load.setBaseURL('media');
-		this.load.image('player', 'megaman.gif');
+		this.load.setBaseURL('assets/images');
+		this.load.image('player', 'old/megaman.gif');
 		this._cursors = this.input.keyboard.createCursorKeys();
 		this._preloadFixtures();
 	}
