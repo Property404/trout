@@ -1,0 +1,238 @@
+"use strict";
+// Represents a regular trout scene
+// where the player can move around and shit
+// 
+// This does not include UI/game over/etc scenes
+class PlayerScene extends TroutScene
+{
+	// Fixtures are any objects that belong to the scene
+	// This is a Trout abstraction
+	fixture_definitions = [];
+	_fixtures = {};
+
+	_player=null;
+
+	// List of sprites by label
+	_sprite_dict = {};
+
+	// Input cursor
+	_cursors=null;
+	// Keep track of what assets we load
+	_sources = new Set();
+	// Used to get around physics engine limitation
+	_stuck_movables = new Set();
+	// Bound callbacks to particular fixture_definitions w/label
+	// To be executed when user presses space or enter
+	// or something like that near the fixture
+	_interactions = [];
+
+	_timer_done = true;
+	_timer_interval = 10;
+
+	constructor()
+	{
+		super();
+		
+		// preSetup is used internally to deal with added resources
+		// like fixture_definitions and other nonsense
+		if(this.preSetup())this.preSetup();
+
+		// Setup is used by the top-level programmer
+		if(this.setup)this.setup();
+
+		// Set timer
+		setInterval(()=>this._timer_done=true, this._timer_interval);
+	}
+
+	_preloadFixtureSources()
+	{
+		for(const fixture of this.fixture_definitions)
+		{
+			if(this._sources.has(fixture.src))
+				continue;
+			this._sources.add(fixture.src);
+			this.load.image(fixture.src, fixture.src);
+		}
+	}
+
+	_createFixtures()
+	{
+		const stationary_group = this.physics.add.staticGroup();
+		const movables_group = this.physics.add.group();
+
+		for(const fixture_data of this.fixture_definitions)
+		{
+			let fixture;
+
+			if(fixture_data.passable)
+			{
+				fixture = new Fixture(fixture_data,
+					this.add.image.bind(this.add));
+			}
+			else if(fixture_data.movable)
+			{
+				fixture = new Fixture(fixture_data,
+					movables_group.create.bind(movables_group));
+			}
+			else
+			{
+				fixture = new Fixture(fixture_data,
+					stationary_group.create.bind(stationary_group));
+			}
+
+			const sprite = fixture.getPhaserObject();
+			
+
+			if(fixture_data.label)
+			{
+				this._sprite_dict[fixture_data.label] = sprite;
+				this._fixtures[fixture_data.label] = fixture;
+			}
+
+			if(fixture_data.movable)
+			{
+				sprite.body.immovable = true;
+			}
+
+		}
+
+		this.physics.add.collider(this._player, stationary_group);
+		// Stop both movables when one hits another 
+		this.physics.add.collider(movables_group, undefined,
+		(a,b)=>{
+			for(const obj of [a,b])
+			{
+			obj.body.velocity.x=0;
+			obj.body.velocity.y=0;
+			obj.body.immovable=true;
+			}
+		})
+		this.physics.add.collider(stationary_group, movables_group);
+		// Allow movables to be moved only on collision
+		this.physics.add.collider(this._player, movables_group,
+			(player,obj)=>{
+				obj.body.immovable = false;
+				this._stuck_movables.add(obj);
+			}
+		);
+
+	}
+
+	setLoopInterval(interval)
+	{
+		_timer_interval = interval;
+	}
+
+	getLoopInterval(interval)
+	{
+		_timer_interval = interval;
+	}
+
+	// Bind callbacks to particular fixture_definitions w/label
+	// To be executed when user presses space or enter
+	// or something like that near the fixture
+	addInteraction(label, action)
+	{
+		this._interactions.push({
+			label:label,
+			action:action});
+	}
+
+	getFixture(label)
+	{
+		return this._fixtures[label];
+	}
+
+	preload()
+	{
+		this.load.setBaseURL('assets/images');
+		this.load.image('player', 'old/megaman.gif');
+		this._cursors = this.input.keyboard.createCursorKeys();
+		this._preloadFixtureSources();
+	}
+
+	create()
+	{
+		this._player = this.physics.add.sprite(0, 0, 'player');
+		this.cameras.main.startFollow(this._player);
+		this._createFixtures();
+
+		// Set off interactions
+		this.input.keyboard.on('keyup', e=>{
+			if(e.keyCode === 13 || e.keyCode === 32)
+			{
+				for(const interaction of this._interactions)
+				{
+					const sprite = this._sprite_dict[interaction.label];
+					const gap = 25;
+					const xgap = gap + sprite.width/2 + this._player.width/2;
+					const ygap = gap + sprite.height/2 + this._player.height/2;
+					if (
+						this._player.x > sprite.x - xgap &&
+						this._player.x < sprite.x + xgap &&
+						this._player.y > sprite.y - ygap &&
+						this._player.y < sprite.y + ygap
+					)
+					{
+						interaction.action();
+						break;
+					}
+				}
+			}
+		});
+
+		// If this is the first scene,
+		// trout has finished loading
+		trout.finishLoading();
+	}
+
+	update()
+	{
+		const SPEED = 200;
+
+		if(this.loop)
+		{
+			if(0 || this._timer_done)
+			{
+				this._timer_done=false;
+				this.loop();
+			}
+		}
+
+		if(this._cursors.left.isDown)
+		{
+			this._player.flipX = true;
+			this._player.setVelocityX(-SPEED);
+			this._player.setVelocityY(0);
+		}
+		else if(this._cursors.right.isDown)
+		{
+			this._player.flipX = false;
+			this._player.setVelocityX(SPEED);
+			this._player.setVelocityY(0);
+		}
+		else
+		{
+			this._player.setVelocityX(0);
+			if(this._cursors.up.isDown)
+				this._player.setVelocityY(-160);
+			else if(this._cursors.down.isDown)
+				this._player.setVelocityY(160);
+			else
+			{
+				this._player.setVelocityY(0);
+
+				// Only allow objects currently being moved to be movable
+				for(const obj of this._stuck_movables)
+				{
+					if(obj.body.velocity.x == 0 && obj.body.velocity.y==0)
+					{
+						obj.body.immovable=true;
+						this._stuck_movables.delete(obj);
+					}
+				}
+			}
+		}
+	}
+
+}

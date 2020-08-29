@@ -1,7 +1,7 @@
 "use strict";
 
 /* Trout example scene */
-class ExampleScene extends TroutScene
+class ExampleScene extends PlayerScene
 {
 	setup()
 	{

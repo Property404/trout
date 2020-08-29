@@ -2,10 +2,9 @@
 /* Bulbasaur World - another Trout example scene
  * this time with more bulbasaurs! */
 
-class BulbasaurWorld extends TroutScene
+class BulbasaurWorld extends PlayerScene
 {
 	setup(){
-
 		// Create bulbasaur wall
 		const step = 60;
 		const length = 10;
@@ -14,7 +13,7 @@ class BulbasaurWorld extends TroutScene
 		for(let i=0;i<length;i++)
 		{
 			// Upper wall
-			this.fixtures.push(
+			this.fixture_definitions.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+i*step,
@@ -22,7 +21,7 @@ class BulbasaurWorld extends TroutScene
 				});
 
 			// Left wall
-			this.fixtures.push(
+			this.fixture_definitions.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart,
@@ -30,7 +29,7 @@ class BulbasaurWorld extends TroutScene
 				});
 
 			// Right wall
-			this.fixtures.push(
+			this.fixture_definitions.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+length*step,
@@ -38,7 +37,7 @@ class BulbasaurWorld extends TroutScene
 				});
 
 			// Lower wall
-			this.fixtures.push(
+			this.fixture_definitions.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+i*step,
@@ -52,6 +51,21 @@ class BulbasaurWorld extends TroutScene
 			console.log("\n");
 			trout.setPrimaryScene("ExampleScene");
 		});
+	}
+
+	loop()
+	{
+
+		// Animate the Bulbasaur
+		const bulba = this.getFixture("big_bulbasaur");
+		if(bulba.y > 120 && bulba.x < 200)
+			bulba.x+=10;
+		else if (bulba.x >= 200 && bulba.y > -200)
+			bulba.y-=10;
+		else if(bulba.x > -200)
+			bulba.x-=10;
+		else if(bulba.y < 200)
+			bulba.y+=10;
 	}
 }
 trout.registerScene(BulbasaurWorld);

@@ -1,7 +1,7 @@
 "use strict";
 // Class for global game manager object "trout"
 // Wrapper around the Phaser game object
-class TroutManager
+class GameManager
 {
 	_loaded_scenes = new Set();
 	_scenes = {};
@@ -49,7 +49,7 @@ class TroutManager
 	{
 		const scene_data = this._scenes[scene_name];
 		const scene = scene_data.scene;
-		scene.prototype.preSetup = function(){this.fixtures = 
+		scene.prototype.preSetup = function(){this.fixture_definitions = 
 				scene_data.fixtures;
 		}
 		this._game.scene.add("primary", scene, true);
@@ -109,4 +109,4 @@ class TroutManager
 	}
 };
 
-const trout = new TroutManager;
+const trout = new GameManager;
