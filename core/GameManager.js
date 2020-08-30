@@ -50,12 +50,13 @@ class GameManager
 			};
 	}
 
-	_setPrimaryScene(scene_name, fixtures)
+	_setPrimaryScene(scene_name, prefixtures)
 	{
 		const scene_data = this._scenes[scene_name];
 		const scene = scene_data.scene;
-		scene.prototype.preSetup = function(){this.fixture_definitions = 
-				scene_data.fixtures;
+		scene.prototype.preSetup = function(){
+			this.prefixtures = 
+				scene_data.prefixtures;
 		}
 		this._game.scene.add("primary", scene, true);
 	}
@@ -79,22 +80,22 @@ class GameManager
 
 		// Load scene
 		const scene_path = "scenes/"+scene_name+"/";
-		const fixtures_response = await fetch(scene_path+"fixtures.json");
-		if(fixtures_response.ok)
+		const prefixtures_response = await fetch(scene_path+"prefixtures.json");
+		if(prefixtures_response.ok)
 		{
-			const fixtures = await fixtures_response.json();
+			const prefixtures = await prefixtures_response.json();
 
 			const script = document.createElement("script");
 			script.src = scene_path+"/class.js";
 			document.head.appendChild(script);
 			script.onload = ()=>{
-				this._scenes[scene_name].fixtures = fixtures;
+				this._scenes[scene_name].prefixtures = prefixtures;
 				this._setPrimaryScene(scene_name);
 			};
 		}
 		else
 		{
-			throw new Error("Couldn't load fixtures for scene");
+			throw new Error("Couldn't load prefixtures for scene");
 		}
 		
 	}

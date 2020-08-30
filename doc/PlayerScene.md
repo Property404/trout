@@ -9,17 +9,19 @@ This does not include UI/game over/etc scenes
 **Kind**: global class  
 
 * [PlayerScene](#PlayerScene)
-    * [.fixture_definitions](#PlayerScene+fixture_definitions)
+    * [.prefixtures](#PlayerScene+prefixtures)
     * [.setLoopInterval(interval)](#PlayerScene+setLoopInterval)
     * [.getLoopInterval()](#PlayerScene+getLoopInterval) ⇒ <code>integer</code>
     * [.addInteraction(label, action)](#PlayerScene+addInteraction)
     * [.getFixture(label)](#PlayerScene+getFixture) ⇒ <code>Fixture</code>
 
-<a name="PlayerScene+fixture_definitions"></a>
+<a name="PlayerScene+prefixtures"></a>
 
-### playerScene.fixture\_definitions
+### playerScene.prefixtures
 Fixtures are any objects that belong to the scene  
-This is a Trout abstraction
+
+Prefixtures are the descriptive objects used
+to create Fixtures
 
 **Kind**: instance property of [<code>PlayerScene</code>](#PlayerScene)  
 <a name="PlayerScene+setLoopInterval"></a>
@@ -43,7 +45,7 @@ See often loop() is called
 <a name="PlayerScene+addInteraction"></a>
 
 ### playerScene.addInteraction(label, action)
-Bind callbacks to particular fixture_definitions w/label  
+Bind callbacks to particular prefixtures w/label  
 To be executed when user presses space or enter
 or something like that near the fixture
 

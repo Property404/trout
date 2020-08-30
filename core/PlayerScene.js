@@ -9,9 +9,11 @@ class PlayerScene extends TroutScene
 {
 	/**
 	 * Fixtures are any objects that belong to the scene  
-	 * This is a Trout abstraction
+	 *
+	 * Prefixtures are the descriptive objects used
+	 * to create Fixtures
 	 */
-	fixture_definitions = [];
+	prefixtures = [];
 	_fixtures = {};
 
 	_player=null;
@@ -25,7 +27,7 @@ class PlayerScene extends TroutScene
 	_sources = new Set();
 	// Used to get around physics engine limitation
 	_stuck_movables = new Set();
-	// Bound callbacks to particular fixture_definitions w/label
+	// Bound callbacks to particular prefixtures w/label
 	// To be executed when user presses space or enter
 	// or something like that near the fixture
 	_interactions = [];
@@ -38,7 +40,7 @@ class PlayerScene extends TroutScene
 		super();
 		
 		// preSetup is used internally to deal with added resources
-		// like fixture_definitions and other nonsense
+		// like prefixtures and other nonsense
 		if(this.preSetup())this.preSetup();
 
 		// Setup is used by the top-level programmer
@@ -52,7 +54,7 @@ class PlayerScene extends TroutScene
 	{
 		const prototypes = {}
 
-		for(const fixture_data of this.fixture_definitions)
+		for(const fixture_data of this.prefixtures)
 		{
 			// Simple inheritence system
 			// Inherit from parent
@@ -97,7 +99,7 @@ class PlayerScene extends TroutScene
 	{
 		const stationary_group = this.physics.add.staticGroup();
 		const movables_group = this.physics.add.group();
-		for(const fixture_data of this.fixture_definitions)
+		for(const fixture_data of this.prefixtures)
 		{
 			if(fixture_data.abstract)
 				continue;
@@ -170,7 +172,7 @@ class PlayerScene extends TroutScene
 	}
 
 	/**
-	 * Bind callbacks to particular fixture_definitions w/label  
+	 * Bind callbacks to particular prefixtures w/label  
 	 * To be executed when user presses space or enter
 	 * or something like that near the fixture
 	 *

@@ -13,7 +13,7 @@ class BulbasaurWorld extends PlayerScene
 		for(let i=0;i<length;i++)
 		{
 			// Upper wall
-			this.fixture_definitions.push(
+			this.prefixtures.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+i*step,
@@ -21,7 +21,7 @@ class BulbasaurWorld extends PlayerScene
 				});
 
 			// Left wall
-			this.fixture_definitions.push(
+			this.prefixtures.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart,
@@ -29,7 +29,7 @@ class BulbasaurWorld extends PlayerScene
 				});
 
 			// Right wall
-			this.fixture_definitions.push(
+			this.prefixtures.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+length*step,
@@ -37,7 +37,7 @@ class BulbasaurWorld extends PlayerScene
 				});
 
 			// Lower wall
-			this.fixture_definitions.push(
+			this.prefixtures.push(
 				{
 					src:"old/bulbasaur.png",
 					x:xstart+i*step,
