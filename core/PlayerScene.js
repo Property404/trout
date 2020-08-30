@@ -1,6 +1,6 @@
 "use strict";
 // Represents a regular trout scene
-// where the player can move around and shit
+// where the player can move around and crap
 // 
 // This does not include UI/game over/etc scenes
 class PlayerScene extends TroutScene
@@ -62,24 +62,15 @@ class PlayerScene extends TroutScene
 
 		for(const fixture_data of this.fixture_definitions)
 		{
-			let fixture;
-
-			if(fixture_data.passable)
-			{
-				fixture = new Fixture(fixture_data,
-					this.add.image.bind(this.add));
-			}
-			else if(fixture_data.movable)
-			{
-				fixture = new Fixture(fixture_data,
-					movables_group.create.bind(movables_group));
-			}
-			else
-			{
-				fixture = new Fixture(fixture_data,
-					stationary_group.create.bind(stationary_group));
-			}
-
+			const fixture = new Fixture(
+				fixture_data,
+				this,
+				{
+					stationary_group:stationary_group,
+					movables_group:movables_group
+				}
+			);
+				
 			const sprite = fixture.getPhaserObject();
 			
 
@@ -89,7 +80,7 @@ class PlayerScene extends TroutScene
 				this._fixtures[fixture_data.label] = fixture;
 			}
 
-			if(fixture_data.movable)
+			if(fixture_data.type === "movable")
 			{
 				sprite.body.immovable = true;
 			}
@@ -146,7 +137,7 @@ class PlayerScene extends TroutScene
 	preload()
 	{
 		this.load.setBaseURL('assets/images');
-		this.load.image('player', 'old/megaman.gif');
+		this.load.spritesheet('player', 'sheet_ghost.png', {frameWidth:64, frameHeight:64});
 		this._cursors = this.input.keyboard.createCursorKeys();
 		this._preloadFixtureSources();
 	}
@@ -154,6 +145,24 @@ class PlayerScene extends TroutScene
 	create()
 	{
 		this._player = this.physics.add.sprite(0, 0, 'player');
+		this.anims.create({
+			key: 'player_front',
+			frames: [ { key: 'player', frame: 0 } ],
+			frameRate: 20
+		});
+		this.anims.create({
+			key: 'player_back',
+			frames: [ { key: 'player', frame: 1 } ],
+			frameRate: 20
+		});
+		this.anims.create({
+			key: 'player_side',
+			frames: [ { key: 'player', frame: 2 } ],
+			frameRate: 20
+		});
+		this._player.depth = 100;
+
+		
 		this.cameras.main.startFollow(this._player);
 		this._createFixtures();
 
@@ -204,20 +213,28 @@ class PlayerScene extends TroutScene
 			this._player.flipX = true;
 			this._player.setVelocityX(-SPEED);
 			this._player.setVelocityY(0);
+			this._player.anims.play("player_side");
 		}
 		else if(this._cursors.right.isDown)
 		{
 			this._player.flipX = false;
 			this._player.setVelocityX(SPEED);
 			this._player.setVelocityY(0);
+			this._player.anims.play("player_side");
 		}
 		else
 		{
 			this._player.setVelocityX(0);
 			if(this._cursors.up.isDown)
+			{
 				this._player.setVelocityY(-160);
+				this._player.anims.play("player_back");
+			}
 			else if(this._cursors.down.isDown)
+			{
 				this._player.setVelocityY(160);
+				this._player.anims.play("player_front");
+			}
 			else
 			{
 				this._player.setVelocityY(0);

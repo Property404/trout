@@ -11,12 +11,12 @@
 	{
 		"src":"old/star.png",
 		"x":20, "y":-30,
-		"movable":true
+		"type":"movable"
 	},
 	{
 		"src":"old/star.png",
 		"x":200, "y":-30,
-		"movable":true
+		"type":"movable"
 	},
 	{
 		"label":"big_star",

@@ -4,6 +4,6 @@
 		"x":-200, "y":90,
 		"scale":3,
 		"src":"old/bulbasaur.png",
-		"passable":true
+		"type":"passable"
 	}
 ]

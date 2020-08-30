@@ -1,0 +1,20 @@
+[
+	{
+		"type":"ground",
+		"x":0,
+		"y":0,
+		"width": 450,
+		"height": 450,
+		"scale":4,
+		"src":"woodfloor.png"
+	},
+	{
+		"type":"ground",
+		"x":1025,
+		"y":0,
+		"width": 2050,
+		"height": 64,
+		"scale":4,
+		"src":"woodfloor.png"
+	}
+]
