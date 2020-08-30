@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Wrapper around sprites and images
+ * Wrapper around sprites and images  
  * Represents a "thing" in scenes
  */
 class Fixture

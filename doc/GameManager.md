@@ -1,7 +1,7 @@
 <a name="GameManager"></a>
 
 ## GameManager
-Wrapper around Phaser.Game
+Wrapper around Phaser.Game  
 Acts as scene manager, and takes on other global responsibilities
 
 **Kind**: global class  
@@ -15,7 +15,7 @@ Acts as scene manager, and takes on other global responsibilities
 <a name="GameManager+registerScene"></a>
 
 ### gameManager.registerScene(scene)
-Register a scene
+Register a scene  
 This should be done for any dynamically loaded scene
 
 **Kind**: instance method of [<code>GameManager</code>](#GameManager)  
@@ -44,7 +44,7 @@ Set a callback to be called when we finish loading the first scene
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>callback</code> | The callback to be used |
+| callback | <code>onFinishLoading</code> | The callback to be used |
 
 <a name="GameManager+finishLoading"></a>
 

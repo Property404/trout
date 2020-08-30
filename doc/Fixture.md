@@ -1,7 +1,7 @@
 <a name="Fixture"></a>
 
 ## Fixture
-Wrapper around sprites and images
+Wrapper around sprites and images  
 Represents a "thing" in scenes
 
 **Kind**: global class  

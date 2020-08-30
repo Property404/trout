@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Wrapper around Phaser.Game
+ * Wrapper around Phaser.Game  
  * Acts as scene manager, and takes on other global responsibilities
  */
 class GameManager
@@ -27,7 +27,7 @@ class GameManager
 	}
 
 /**
- * Register a scene
+ * Register a scene  
  * This should be done for any dynamically loaded scene
  * @param {TroutScene} - The scene to be registered
  */
@@ -101,7 +101,7 @@ class GameManager
 
 /**
  * Set a callback to be called when we finish loading the first scene
- * @param {callback} - The callback to be used
+ * @param {onFinishLoading} - The callback to be used
  */
 	onFinishLoading(callback)
 	{

@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Represents a regular trout scene
+ * Represents a regular trout scene  
  * where the player can move around and crap
  *
  * This does not include UI/game over/etc scenes
@@ -8,7 +8,7 @@
 class PlayerScene extends TroutScene
 {
 	/**
-	 * Fixtures are any objects that belong to the scene
+	 * Fixtures are any objects that belong to the scene  
 	 * This is a Trout abstraction
 	 */
 	fixture_definitions = [];
@@ -170,7 +170,7 @@ class PlayerScene extends TroutScene
 	}
 
 	/**
-	 * Bind callbacks to particular fixture_definitions w/label
+	 * Bind callbacks to particular fixture_definitions w/label  
 	 * To be executed when user presses space or enter
 	 * or something like that near the fixture
 	 *
