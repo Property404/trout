@@ -1,5 +1,8 @@
 "use strict";
-/* Trout Core Wrapper around sprites/images */
+/**
+ * Wrapper around sprites and images
+ * Represents a "thing" in scenes
+ */
 class Fixture
 {
 	_static_depth = null;
@@ -102,11 +105,18 @@ class Fixture
 		return obj;
 	}
 
+/**
+ * Get underlying Phaser Game Object
+ * @returns {GameObject}
+ */
 	getPhaserObject()
 	{
 		return this._obj;
 	}
 
+/**
+ * X value of the fixture
+ */
 	get x()
 	{
 		return this._obj.x;
@@ -119,6 +129,9 @@ class Fixture
 		this._obj.x=val;
 	}
 
+/**
+ * Y value of the fixture
+ */
 	get y()
 	{
 		return this._obj.y;

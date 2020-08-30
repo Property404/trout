@@ -1,12 +1,16 @@
 "use strict";
-// Represents a regular trout scene
-// where the player can move around and crap
-// 
-// This does not include UI/game over/etc scenes
+/**
+ * Represents a regular trout scene
+ * where the player can move around and crap
+ *
+ * This does not include UI/game over/etc scenes
+ */
 class PlayerScene extends TroutScene
 {
-	// Fixtures are any objects that belong to the scene
-	// This is a Trout abstraction
+	/**
+	 * Fixtures are any objects that belong to the scene
+	 * This is a Trout abstraction
+	 */
 	fixture_definitions = [];
 	_fixtures = {};
 
@@ -145,19 +149,34 @@ class PlayerScene extends TroutScene
 
 	}
 
+	/**
+	 * Set how often loop() is called
+	 *
+	 * @param {integer} - The interval in milliseconds
+	 */
 	setLoopInterval(interval)
 	{
 		_timer_interval = interval;
 	}
 
-	getLoopInterval(interval)
+	/**
+	 * See often loop() is called
+	 *
+	 * @return {integer} - the interval in milliseconds
+	 */
+	getLoopInterval()
 	{
-		_timer_interval = interval;
+		return _timer_interval;
 	}
 
-	// Bind callbacks to particular fixture_definitions w/label
-	// To be executed when user presses space or enter
-	// or something like that near the fixture
+	/**
+	 * Bind callbacks to particular fixture_definitions w/label
+	 * To be executed when user presses space or enter
+	 * or something like that near the fixture
+	 *
+	 * @param {string} - The Fixture label
+	 * @param {function} - The action to be used upon interaction
+	 */
 	addInteraction(label, action)
 	{
 		this._interactions.push({
@@ -165,6 +184,12 @@ class PlayerScene extends TroutScene
 			action:action});
 	}
 
+	/**
+	 * Get Fixture by label
+	 *
+	 * @param {string} - The Fixture label
+	 * @return {Fixture} - The Fixture
+	 */
 	getFixture(label)
 	{
 		return this._fixtures[label];

@@ -1,6 +1,8 @@
 "use strict";
-// Class for global game manager object "trout"
-// Wrapper around the Phaser game object
+/**
+ * Wrapper around Phaser.Game
+ * Acts as scene manager, and takes on other global responsibilities
+ */
 class GameManager
 {
 	_loaded_scenes = new Set();
@@ -24,9 +26,11 @@ class GameManager
 		this._game = new Phaser.Game(_config);
 	}
 
-	// After defining a scene,
-	// you should register it immediately after
-	// so we can use it when we load it
+/**
+ * Register a scene
+ * This should be done for any dynamically loaded scene
+ * @param {TroutScene} - The scene to be registered
+ */
 	registerScene(scene)
 	{
 		if(!this._latest_scene_name)
@@ -56,7 +60,10 @@ class GameManager
 		this._game.scene.add("primary", scene, true);
 	}
 
-	// Change main scene
+/**
+ * Change the current primary scene
+ * @param {TroutScene} - The scene to be used
+ */
 	async setPrimaryScene(scene_name)
 	{
 		this._game.scene.remove("primary");
@@ -92,15 +99,20 @@ class GameManager
 		
 	}
 
-	// Set a callback to be called when we finish loading the first scene
+/**
+ * Set a callback to be called when we finish loading the first scene
+ * @param {callback} - The callback to be used
+ */
 	onFinishLoading(callback)
 	{
 		this._loading_finished_callback = callback;
 	}
 	
-	// notify game manager that we finished loading and that we should use a
-	// callback if one had previouly been provided
-	finishLoading(callback)
+/**
+ * Notify game manager that we finished loading and that we should use a
+ * callback if one has previouly been provided
+ */
+	finishLoading()
 	{
 		if(this._loading_finished_callback)
 		{
