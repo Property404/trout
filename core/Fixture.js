@@ -2,10 +2,7 @@
 /* Trout Core Wrapper around sprites/images */
 class Fixture
 {
-	static _DEFAULT_FRICTION = 500;
-	static _GROUND_DEPTH = -500000;
 	_static_depth = null;
-	
 
 	constructor(first_arg, context=null, groups=null)
 	{
@@ -135,3 +132,8 @@ class Fixture
 		this._setDepth();
 	}
 }
+// Statics are not implemented in Epiphany(WebKitGTK)
+// Since we're using it as our mock Safari, let's have
+// a workaround
+Fixture._GROUND_DEPTH = -500000;
+Fixture._DEFAULT_FRICTION = 500;
