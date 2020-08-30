@@ -1,20 +1,46 @@
 [
 	{
+		"label":"wood_floor",
 		"type":"ground",
+		"src":"woodfloor.png",
+		"scale":4,
+		"abstract":true
+	},
+	{
+		"label":"wood_floor_edge",
+		"src":"pixels/6f4b14.png",
+		"abstract":true
+	},
+	{
+		"inherit":"wood_floor",
 		"x":0,
 		"y":0,
 		"width": 450,
-		"height": 450,
-		"scale":4,
-		"src":"woodfloor.png"
+		"height": 450
 	},
 	{
-		"type":"ground",
+		"inherit":"wood_floor",
 		"x":1025,
 		"y":0,
 		"width": 2050,
-		"height": 64,
-		"scale":4,
-		"src":"woodfloor.png"
+		"height": 64
+	},
+	{
+		"inherit":"wood_floor_edge",
+		"x":0,
+		"y":224,
+		"scalex":450
+	},
+	{
+		"inherit":"wood_floor_edge",
+		"x":0,
+		"y":-224,
+		"scalex":450
+	},
+	{
+		"inherit":"wood_floor_edge",
+		"x":-224,
+		"y":0,
+		"scaley":450
 	}
 ]

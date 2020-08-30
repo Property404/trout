@@ -58,14 +58,15 @@ class BulbasaurWorld extends PlayerScene
 
 		// Animate the Bulbasaur
 		const bulba = this.getFixture("big_bulbasaur");
+		const speed = 1;
 		if(bulba.y > 120 && bulba.x < 200)
-			bulba.x+=10;
+			bulba.x+=speed;
 		else if (bulba.x >= 200 && bulba.y > -200)
-			bulba.y-=10;
+			bulba.y-=speed;
 		else if(bulba.x > -200)
-			bulba.x-=10;
+			bulba.x-=speed;
 		else if(bulba.y < 200)
-			bulba.y+=10;
+			bulba.y+=speed;
 	}
 }
 trout.registerScene(BulbasaurWorld);

@@ -9,7 +9,6 @@ class GameManager
 	constructor()
 	{
 		const url_params = new URLSearchParams(window.location.search);
-		console.log(url_params);
 		const _config = {
 			type: Phaser.AUTO,
 			width: 800,

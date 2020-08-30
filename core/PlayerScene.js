@@ -46,12 +46,46 @@ class PlayerScene extends TroutScene
 
 	_preloadFixtureSources()
 	{
-		for(const fixture of this.fixture_definitions)
+		const prototypes = {}
+
+		for(const fixture_data of this.fixture_definitions)
 		{
-			if(this._sources.has(fixture.src))
+			// Simple inheritence system
+			// Inherit from parent
+			if(fixture_data.inherit)
+			{
+				const new_fixture_data = {};
+				const parent_data = prototypes[fixture_data.inherit];
+				if(!parent_data)
+					throw new Error(`No such fixture definition to inherit from '${fixture_data.inherit}'`);
+				for(const prop in parent_data)
+				{
+					if(["abstract", "label"].includes(prop))
+						continue;
+					new_fixture_data[prop] = parent_data[prop];
+				}
+				for(const prop in fixture_data)
+				{
+					new_fixture_data[prop] = fixture_data[prop];
+				}
+				for(const prop in new_fixture_data)
+				{
+					fixture_data[prop] = new_fixture_data[prop];
+				}
+			}
+
+			// Any fixture definition with a label can be a prototype
+			// Does not have to be abstract
+			if(fixture_data.label)
+			{
+				const label = fixture_data.label;
+				prototypes[label] = fixture_data;
+			}
+			
+			if(this._sources.has(fixture_data.src))
 				continue;
-			this._sources.add(fixture.src);
-			this.load.image(fixture.src, fixture.src);
+			this._sources.add(fixture_data.src);
+			this.load.image(fixture_data.src, fixture_data.src);
 		}
 	}
 
@@ -59,9 +93,11 @@ class PlayerScene extends TroutScene
 	{
 		const stationary_group = this.physics.add.staticGroup();
 		const movables_group = this.physics.add.group();
-
 		for(const fixture_data of this.fixture_definitions)
 		{
+			if(fixture_data.abstract)
+				continue;
+			// Now we can create the concreate fixture
 			const fixture = new Fixture(
 				fixture_data,
 				this,
@@ -145,6 +181,8 @@ class PlayerScene extends TroutScene
 	create()
 	{
 		this._player = this.physics.add.sprite(0, 0, 'player');
+		this._player.body.height/=2;
+		this._player.body.setOffset(0,this._player.body.height);
 		this.anims.create({
 			key: 'player_front',
 			frames: [ { key: 'player', frame: 0 } ],
@@ -160,7 +198,6 @@ class PlayerScene extends TroutScene
 			frames: [ { key: 'player', frame: 2 } ],
 			frameRate: 20
 		});
-		this._player.depth = 100;
 
 		
 		this.cameras.main.startFollow(this._player);
@@ -249,6 +286,8 @@ class PlayerScene extends TroutScene
 					}
 				}
 			}
+			
+			this._player.depth = this._player.y+1;
 		}
 	}
 

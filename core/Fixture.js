@@ -3,6 +3,9 @@
 class Fixture
 {
 	static _DEFAULT_FRICTION = 500;
+	static _GROUND_DEPTH = -500000;
+	_static_depth = null;
+	
 
 	constructor(first_arg, context=null, groups=null)
 	{
@@ -12,6 +15,8 @@ class Fixture
 			this._createGameObject(first_arg, groups):
 			// Otherwise, form wrapper around existing object
 			first_arg;
+
+		this._setDepth();
 	}
 
 	_createGround(data, groups)
@@ -24,6 +29,7 @@ class Fixture
 		const width = data.width/scale;
 		const height = data.height/scale;
 		const obj = this._context.add.tileSprite(data.x,data.y,width, height,data.src);
+		this._static_depth = Fixture._GROUND_DEPTH;
 		return obj;
 	}
 
@@ -46,6 +52,11 @@ class Fixture
 		return obj;
 	}
 
+	_setDepth()
+	{
+		this._obj.depth = this._static_depth || this._obj.y;
+	}
+
 	_createGameObject(data, groups)
 	{
 		let obj;
@@ -65,12 +76,31 @@ class Fixture
 		}
 			
 		if(data.scale)
-			obj.setScale(data.scale);
+		{
+			if(data.scalex || data.scaley)
+				throw new Error("Fixture definition cannot have 'scale' and 'scalex'/'scaley' properties");
+			obj.setScale(data.scale)
+		}
+		if(data.scalex || data.scaley)
+		{
+			obj.setScale(data.scalex||1, data.scaley||1);
+		}
+		if(obj.body)obj.refreshBody();
 
 		/* TODO: figure out rotation */
 
-		if(obj.body)
-			obj.refreshBody();
+		if(data.elevation)
+		{
+			if(!obj.body)
+				throw new Error(`Property 'elevation' does not apply to Fixture of type '${data.type}`);
+			if(data.elevation<0 || data.elevation>1)
+			{
+				throw new Error("Fixture property 'elevation' must be between 0 and 1, inclusive");
+			}
+			obj.body.height*=(1-data.elevation);
+			obj.body.setOffset(0,obj.displayHeight-obj.body.height);
+			console.log("ELEVATE");
+		}
 
 		return obj;
 	}
@@ -102,5 +132,6 @@ class Fixture
 		if(this._obj.body)
 			this._obj.body.y=val;
 		this._obj.y=val;
+		this._setDepth();
 	}
 }
