@@ -17,6 +17,7 @@ class PlayerScene extends TroutScene
 	_fixtures = {};
 
 	_player=null;
+	_player_fixture=null;
 
 	// List of sprites by label
 	_sprite_dict = {};
@@ -146,6 +147,7 @@ class PlayerScene extends TroutScene
 			(player,obj)=>{
 				obj.body.immovable = false;
 				this._stuck_movables.add(obj);
+				new Fixture(obj).refreshDepth();
 			}
 		);
 
@@ -197,6 +199,14 @@ class PlayerScene extends TroutScene
 		return this._fixtures[label];
 	}
 
+	/**
+	 * Fixture object wrapping the player
+	 */
+	get player_fixture()
+	{
+		return this._player_fixture;
+	}
+
 	preload()
 	{
 		this.load.setBaseURL('assets/images');
@@ -208,8 +218,9 @@ class PlayerScene extends TroutScene
 	create()
 	{
 		this._player = this.physics.add.sprite(0, 0, 'player');
-		this._player.body.height/=2;
-		this._player.body.setOffset(0,this._player.body.height);
+		this._player.body.height/=10;
+		this._player.body.setOffset(0,this._player.height-this._player.body.height);
+		this._player_fixture = new Fixture(this._player);
 		this.anims.create({
 			key: 'player_front',
 			frames: [ { key: 'player', frame: 0 } ],
@@ -313,8 +324,8 @@ class PlayerScene extends TroutScene
 					}
 				}
 			}
-			
-			this._player.depth = this._player.y+1;
+
+			this.player_fixture.refreshDepth();
 		}
 	}
 

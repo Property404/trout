@@ -16,7 +16,7 @@ class Fixture
 			// Otherwise, form wrapper around existing object
 			first_arg;
 
-		this._setDepth();
+		this.refreshDepth();
 	}
 
 	_createGround(data, groups)
@@ -52,9 +52,13 @@ class Fixture
 		return obj;
 	}
 
-	_setDepth()
+	refreshDepth()
 	{
-		this._obj.depth = this._static_depth || this._obj.y;
+		const y = this._obj.y;
+		const hh = this._obj.displayHeight/2;
+		this._obj.depth = this._static_depth ||
+			(y+hh)*20;
+		if(!hh)throw new Error("No half height:", hh);
 	}
 
 	_createGameObject(data, groups)
@@ -142,7 +146,7 @@ class Fixture
 		if(this._obj.body)
 			this._obj.body.y=val;
 		this._obj.y=val;
-		this._setDepth();
+		this.refreshDepth();
 	}
 }
 // Statics are not implemented in Epiphany(WebKitGTK)
