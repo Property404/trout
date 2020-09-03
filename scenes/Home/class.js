@@ -1,6 +1,6 @@
 "use strict";
 
-class Home extends PlayerScene
+class Home extends RoomScene
 {
 	setup()
 	{

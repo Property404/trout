@@ -7,11 +7,6 @@
 		"abstract":true
 	},
 	{
-		"label":"wood_floor_edge",
-		"src":"pixels/6f4b14.png",
-		"abstract":true
-	},
-	{
 		"inherit":"wood_floor",
 		"x":0,
 		"y":0,
@@ -20,27 +15,16 @@
 	},
 	{
 		"inherit":"wood_floor",
-		"x":1025,
+		"x":500,
 		"y":0,
-		"width": 2050,
+		"width": 1050,
 		"height": 64
 	},
 	{
-		"inherit":"wood_floor_edge",
-		"x":0,
-		"y":224,
-		"scalex":450
-	},
-	{
-		"inherit":"wood_floor_edge",
-		"x":0,
-		"y":-224,
-		"scalex":450
-	},
-	{
-		"inherit":"wood_floor_edge",
-		"x":-224,
+		"inherit":"wood_floor",
+		"x":1025,
 		"y":0,
-		"scaley":450
+		"width": 250,
+		"height": 450
 	}
 ]

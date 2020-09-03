@@ -47,11 +47,15 @@ class PlayerScene extends TroutScene
 		// Setup is used by the top-level programmer
 		if(this.setup)this.setup();
 
+		// We process prefixtures in constructor so subclasses
+		// can deal with fully processed prefixtures
+		this._processPrefixtures();
+
 		// Set timer
 		setInterval(()=>this._timer_done=true, this._timer_interval);
 	}
 
-	_preloadFixtureSources()
+	_processPrefixtures()
 	{
 		const prototypes = {}
 
@@ -88,11 +92,17 @@ class PlayerScene extends TroutScene
 				const label = fixture_data.label;
 				prototypes[label] = fixture_data;
 			}
-			
-			if(this._sources.has(fixture_data.src))
+		}
+	}
+
+	_preloadFixtureSources()
+	{
+		for(const prefixture of this.prefixtures)
+		{
+			if(this._sources.has(prefixture.src))
 				continue;
-			this._sources.add(fixture_data.src);
-			this.load.image(fixture_data.src, fixture_data.src);
+			this._sources.add(prefixture.src);
+			this.load.image(prefixture.src, prefixture.src);
 		}
 	}
 
@@ -102,6 +112,7 @@ class PlayerScene extends TroutScene
 		const movables_group = this.physics.add.group();
 		for(const fixture_data of this.prefixtures)
 		{
+			console.log(fixture_data.src);
 			if(fixture_data.abstract)
 				continue;
 			// Now we can create the concreate fixture

@@ -10,6 +10,7 @@ This does not include UI/game over/etc scenes
 
 * [PlayerScene](#PlayerScene)
     * [.prefixtures](#PlayerScene+prefixtures)
+    * [.player_fixture](#PlayerScene+player_fixture)
     * [.setLoopInterval(interval)](#PlayerScene+setLoopInterval)
     * [.getLoopInterval()](#PlayerScene+getLoopInterval) ⇒ <code>integer</code>
     * [.addInteraction(label, action)](#PlayerScene+addInteraction)
@@ -22,6 +23,12 @@ Fixtures are any objects that belong to the scene
 
 Prefixtures are the descriptive objects used
 to create Fixtures
+
+**Kind**: instance property of [<code>PlayerScene</code>](#PlayerScene)  
+<a name="PlayerScene+player_fixture"></a>
+
+### playerScene.player\_fixture
+Fixture object wrapping the player
 
 **Kind**: instance property of [<code>PlayerScene</code>](#PlayerScene)  
 <a name="PlayerScene+setLoopInterval"></a>
