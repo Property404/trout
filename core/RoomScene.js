@@ -1,6 +1,8 @@
 /**
- * Scene with a room
+ * Scene with a room  
  * Automatically draws borders around grounds
+ * 
+ * Inherits from PlayerScene
  */
 class RoomScene extends PlayerScene
 {

@@ -1,10 +1,12 @@
 <a name="PlayerScene"></a>
 
 ## PlayerScene
-Represents a regular trout scene  
+Represents a regular trout scene
 where the player can move around and crap
 
 This does not include UI/game over/etc scenes
+
+Inherits from TroutScene
 
 **Kind**: global class  
 
@@ -12,7 +14,7 @@ This does not include UI/game over/etc scenes
     * [.prefixtures](#PlayerScene+prefixtures)
     * [.player_fixture](#PlayerScene+player_fixture)
     * [.setLoopInterval(interval)](#PlayerScene+setLoopInterval)
-    * [.getLoopInterval()](#PlayerScene+getLoopInterval) ⇒ <code>integer</code>
+    * [.getLoopInterval()](#PlayerScene+getLoopInterval) ⇒ <code>number</code>
     * [.addInteraction(label, action)](#PlayerScene+addInteraction)
     * [.getFixture(label)](#PlayerScene+getFixture) ⇒ <code>Fixture</code>
 
@@ -40,15 +42,15 @@ Set how often loop() is called
 
 | Param | Type | Description |
 | --- | --- | --- |
-| interval | <code>integer</code> | The interval in milliseconds |
+| interval | <code>number</code> | The interval in milliseconds |
 
 <a name="PlayerScene+getLoopInterval"></a>
 
-### playerScene.getLoopInterval() ⇒ <code>integer</code>
+### playerScene.getLoopInterval() ⇒ <code>number</code>
 See often loop() is called
 
 **Kind**: instance method of [<code>PlayerScene</code>](#PlayerScene)  
-**Returns**: <code>integer</code> - - the interval in milliseconds  
+**Returns**: <code>number</code> - - the interval in milliseconds  
 <a name="PlayerScene+addInteraction"></a>
 
 ### playerScene.addInteraction(label, action)

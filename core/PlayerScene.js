@@ -1,9 +1,11 @@
 "use strict";
 /**
- * Represents a regular trout scene  
+ * Represents a regular trout scene
  * where the player can move around and crap
  *
  * This does not include UI/game over/etc scenes
+ *
+ * Inherits from TroutScene
  */
 class PlayerScene extends TroutScene
 {
@@ -167,7 +169,7 @@ class PlayerScene extends TroutScene
 	/**
 	 * Set how often loop() is called
 	 *
-	 * @param {integer} - The interval in milliseconds
+	 * @param {number} - The interval in milliseconds
 	 */
 	setLoopInterval(interval)
 	{
@@ -177,7 +179,7 @@ class PlayerScene extends TroutScene
 	/**
 	 * See often loop() is called
 	 *
-	 * @return {integer} - the interval in milliseconds
+	 * @return {number} - the interval in milliseconds
 	 */
 	getLoopInterval()
 	{
