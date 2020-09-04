@@ -33,6 +33,13 @@ Inherit properties from another (labeled) prefixture
 A label we use to refer to this specific fixture
 in code
 
+### level
+**Type**: number
+
+**Description**:  
+The altitude/depth of the object. Used to position objects on top of each
+other
+
 ### scale
 **Type**: number
 

@@ -6,6 +6,7 @@
 class Fixture
 {
 	_static_depth = null;
+	level = 0;
 
 	constructor(first_arg, context=null, groups=null)
 	{
@@ -56,8 +57,8 @@ class Fixture
 	{
 		const y = this._obj.y;
 		const hh = this._obj.displayHeight/2;
-		this._obj.depth = this._static_depth ||
-			(y+hh)*20;
+		const base = (y+hh)
+		this._obj.depth = this.level + (this._static_depth || base);
 		if(!hh)throw new Error("No half height:", hh);
 	}
 
@@ -104,6 +105,11 @@ class Fixture
 			obj.body.height*=(1-data.elevation);
 			obj.body.setOffset(0,obj.displayHeight-obj.body.height);
 			console.log("ELEVATE");
+		}
+
+		if (data.level)
+		{
+			this.level = data.level;
 		}
 
 		return obj;
