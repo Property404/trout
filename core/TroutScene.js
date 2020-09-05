@@ -6,4 +6,10 @@
  */
 class TroutScene extends Phaser.Scene
 {
+	constructor()
+	{
+		super();
+		if(this.constructor === TroutScene)
+			throw new Error("Can't instantiate abstract class");
+	}
 }

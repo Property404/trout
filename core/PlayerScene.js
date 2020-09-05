@@ -114,7 +114,6 @@ class PlayerScene extends TroutScene
 		const movables_group = this.physics.add.group();
 		for(const fixture_data of this.prefixtures)
 		{
-			console.log(fixture_data.src);
 			if(fixture_data.abstract)
 				continue;
 			// Now we can create the concreate fixture

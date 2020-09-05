@@ -40,8 +40,6 @@ class RoomScene extends PlayerScene
 					(hedge.p1.y === this.y || hedge.p1.y === this.y+this.height) &&
 					(Math.abs(hedge.p2.x-hedge.p1.x)<=this.width))
 					return false;
-
-				console.log(hedge);	
 				return true;
 			}
 		}
@@ -50,10 +48,6 @@ class RoomScene extends PlayerScene
 			constructor(p1,p2)
 			{
 				[this.p1, this.p2] = [p1,p2];
-			}
-			containsPoint(p)
-			{
-				throw "Unimplemented";
 			}
 		}
 
@@ -70,14 +64,6 @@ class RoomScene extends PlayerScene
 				if(a.y === b.y)
 					throw("Oh no");
 				this.vertical=true;
-			}
-			containsPoint(p)
-			{
-				if(p.x !== this.p1.x)
-					return false;
-				return
-					(p.y<=this.p1.y && p.y>=this.p2.y) ||
-					(p.y>=this.p1.y && p.y<=this.p2.y) 
 			}
 			getIntersection(hedge)
 			{
@@ -108,14 +94,6 @@ class RoomScene extends PlayerScene
 				if(a.x === b.x)
 					throw("Oh no");
 				this.vertical=false;
-			}
-			containsPoint(p)
-			{
-				if(p.y !== this.p1.y)
-					return false;
-				return
-					(p.x<=this.p1.x && p.x>=this.p2.x) ||
-					(p.x>=this.p1.x && p.x<=this.p2.x) 
 			}
 		}
 		const areas=[];

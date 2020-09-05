@@ -1,3 +1,4 @@
+/* Initialization code */
 {
 	// Remove loading screen
 	trout.onFinishLoading(()=>
