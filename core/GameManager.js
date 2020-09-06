@@ -16,6 +16,7 @@ class GameManager
 			width: 800,
 			height: 600,
 			pixelArt: true,
+			parent: "game-container",
 			physics: {
 				default: 'arcade',
 				arcade:{
@@ -63,7 +64,7 @@ class GameManager
 
 /**
  * Change the current primary scene
- * @param {TroutScene} - The scene to be used
+ * @param {string} - The scene to be used
  */
 	async setPrimaryScene(scene_name)
 	{
@@ -102,7 +103,7 @@ class GameManager
 
 /**
  * Set a callback to be called when we finish loading the first scene
- * @param {onFinishLoading} - The callback to be used
+ * @param {function} - The callback to be used
  */
 	onFinishLoading(callback)
 	{
@@ -120,6 +121,20 @@ class GameManager
 			this._loading_finished_callback();
 			this._loading_finished_callback = null;
 		}
+	}
+
+/**
+ * Enter dialog mode
+ * @param {phrases} - List of phrases for the Dialog constructor
+ */
+	displayDialog(phrases)
+	{
+		this._game.scene.pause("primary");
+
+		const dialog = new Dialog(phrases);
+		dialog.run(()=>{
+			this._game.scene.resume("primary");
+		});
 	}
 };
 
