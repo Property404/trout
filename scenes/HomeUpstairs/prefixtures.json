@@ -26,5 +26,27 @@
 		"y":0,
 		"width": 250,
 		"height": 450
+	},
+	{
+		"label":"bed",
+		"src":"beddie.png",
+		"x":-183,
+		"y":-143,
+		"scale":2.5
+	},
+	{
+		"label":"bookshelf",
+		"src":"bookshelf.png",
+		"x":183,
+		"y":-220,
+		"elevation":0.65,
+		"scale":2.5
+	},
+	{
+		"label":"door",
+		"src":"door.png",
+		"x":700,
+		"y":-78,
+		"scale":2
 	}
 ]

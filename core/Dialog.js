@@ -17,11 +17,11 @@ class Dialog
 		this._callback = callback;
 		this._popNextPhrase();
 		Dialog.element.removeAttribute("hidden");
-		document.onkeypress = ()=>{
+		setTimeout(()=>{document.onkeypress = ()=>{
 			if (event.which == 13 || event.keyCode == 13) {
 				this._popNextPhrase();
 			}
-		};
+		};}, 100);
 	}
 
 	_popNextPhrase()

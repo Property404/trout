@@ -254,15 +254,19 @@ class PlayerScene extends TroutScene
 		this._createFixtures();
 
 		// Set off interactions
-		this.input.keyboard.on('keyup', e=>{
+		this.input.keyboard.on('keydown', e=>{
 			if(e.keyCode === 13 || e.keyCode === 32)
 			{
+				console.log("Enter");
 				for(const interaction of this._interactions)
 				{
+					console.log(interaction);
 					const sprite = this._sprite_dict[interaction.label];
-					const gap = 25;
-					const xgap = gap + sprite.width/2 + this._player.width/2;
-					const ygap = gap + sprite.height/2 + this._player.height/2;
+					const gap = 1;
+					const xgap = gap + sprite.width + this._player.width;
+					const ygap = gap + sprite.height + this._player.height;
+					console.log(xgap, ygap);
+					console.log(this._player.x, sprite.x);
 					if (
 						this._player.x > sprite.x - xgap &&
 						this._player.x < sprite.x + xgap &&
@@ -270,6 +274,7 @@ class PlayerScene extends TroutScene
 						this._player.y < sprite.y + ygap
 					)
 					{
+						console.log("!");
 						interaction.action();
 						break;
 					}
